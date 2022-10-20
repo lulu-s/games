@@ -32,3 +32,7 @@
 ```js
 <div class="snake"></div>
 ```
+
+接下来，这个蛇要动起来，要监听上下左右 + wasd事件（游戏玩家岂能没有wasd）。
+
+#### 利用 keyCode + 
