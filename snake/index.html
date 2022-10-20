@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,28 +19,124 @@
             border: 10px solid green;
 
         }
+
+        .grid {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
         .snake {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             background: #000;
+            /* transition: all .7s linear; */
+        }
+
+        .line {
+            position: absolute;
+            border: 1px solid #000;
+            opacity: 0.05;
+        }
+
+        .line.col {
+            height: 100%;
+        }
+
+        .line.row {
+            width: 100%;
         }
     </style>
 </head>
+
 <body>
     <div class="space">
+        <div class="grid"></div>
         <div class="snake"></div>
     </div>
 
 
     <script>
-        // window.onload = ()=>{
-            
+
+        var step = 30; //步长
+        var snake = document.querySelector(".snake");
+        var prev_pos = { x: 0, y: 0 }; // 上一次的位置
+        var space = document.querySelector('.space');
+        var width = space.clientWidth;
+        var height = space.clientHeight;
+
+        // 随机坐标
+        function random_snake_pos(){
+            prev_pos.x = random_grid(width) * step;
+            prev_pos.y = random_grid(height) * step;
+            snake.style.transform = `translate(${prev_pos.x}px, ${prev_pos.y}px)`;
+        }
+        function random_grid(sum){
+            return Math.floor(Math.floor(sum / step) * Math.random())
+        }
+        random_snake_pos();
+
+        // // 画格子，用vue的话会更方便。。循环就好了
+        // var grid = document.querySelector('.grid');
+        // console.log(grid.clientWidth, grid.clientHeight);
+
+        
+        // for (let x = 0; x < grid.clientWidth; x += step) {
+        //     var line = document.createElement('div');
+        //     line.style.left = x + 'px';
+        //     line.style.top = 0;
+        //     line.classList.add('line');
+        //     line.classList.add('col');
+        //     grid.appendChild(line)
+        // }
+
+        // for (let y = 0; y < grid.clientWidth; y += step) {
+        //     var line = document.createElement('div');
+        //     line.style.top = y + 'px';
+        //     line.style.left = 0;
+        //     line.classList.add('line');
+        //     line.classList.add('row');
+        //     grid.appendChild(line)
         // }
 
 
-        window.addEventListener('keydown', (e)=>{
-            console.log(e);
-        })
+        // // 监听用户键盘
+        // window.addEventListener('keydown', (e) => {
+        //     console.log(e);
+
+        //     switch (e.key) {
+        //         case "w": // 上
+        //         case "ArrowUp":
+        //             snake_move({ x: 0, y: -1 }) // 处理方向
+        //             break;
+        //         case "a": // 左
+        //         case "ArrowLeft":
+        //             snake_move({ x: -1, y: 0 })
+        //             break;
+        //         case "s": // 下
+        //         case "ArrowDown":
+        //             snake_move({ x: 0, y: 1 })
+        //             break;
+        //         case "d": // 右
+        //         case "ArrowRight":
+        //             snake_move({ x: 1, y: 0 })
+        //             break;
+        //     }
+        // })
+
+        // 蛇随机游走
+        // 随机方向
+        function snake_randow_walk(dir) {
+            if (lock) return false;
+            lock = true;
+            prev_pos.x += dir.x * step;
+            prev_pos.y += dir.y * step;
+            snake.style.transform = `translate(${prev_pos.x}px, ${prev_pos.y}px)`;
+            lock = false;
+        }
     </script>
 </body>
+
 </html>
